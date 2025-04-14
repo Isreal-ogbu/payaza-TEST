@@ -7,8 +7,8 @@ aws:
   accessKey: ${AWS_ACCESS_KEY_ID:aws-access-key}
   secretKey: ${AWS_SECRET_ACCESS_KEY:aws-access-key}
   cognito:
-    userPoolId: ${COGNITO_USER_POOL_ID:67e3c12f-87c0-800a-b15d-f52cceffe104}
-    clientId: ${COGNITO_CLIENT_ID:67e3c12f-87c0-800a-b15d-f52cceffe104}
+    userPoolId: ${COGNITO_USER_POOL_ID:us-east-1_abc123}
+    clientId: ${COGNITO_CLIENT_ID:7abc123def456}
   dynamodb:
     messagesTable: ${MESSAGES_TABLE:Messages}
     usersTable: ${USERS_TABLE:Users}
