@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: message
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  accessKey: ${AWS_ACCESS_KEY_ID:aws-access-key}
+  secretKey: ${AWS_SECRET_ACCESS_KEY:aws-access-key}
+  cognito:
+    userPoolId: ${COGNITO_USER_POOL_ID:67e3c12f-87c0-800a-b15d-f52cceffe104}
+    clientId: ${COGNITO_CLIENT_ID:67e3c12f-87c0-800a-b15d-f52cceffe104}
+  dynamodb:
+    messagesTable: ${MESSAGES_TABLE:Messages}
+    usersTable: ${USERS_TABLE:Users}
+  sns:
+    topicArn: ${MESSAGE_NOTIFICATION_TOPIC_ARN:1234567890}
+  websocket:
+    endpoint: ${WEBSOCKET_API_ENDPOINT:wss://dynamodb.region.amazonaws.com}
+    connectionTable:
+
+jwt:
+  secret: ${JWT_SECRET:67e3c12f-87c0-800a-b15d-f52cceffe104}
+  expirationMs: ${JWT_EXPIRATION_MS:3600000}
