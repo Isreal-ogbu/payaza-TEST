@@ -6,9 +6,12 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.instant.message.dto.AuthRequest;
 import com.instant.message.dto.AuthResponse;
+import com.instant.message.exception.MessageProcessingException;
 import com.instant.message.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.naming.AuthenticationException;
 
@@ -42,24 +45,37 @@ public class AuthController {
                     .withBody("{\"message\":\"Internal server error\"}");
         }
     }
-
+    @PostMapping(value = "/auth/register", consumes =MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
     private APIGatewayProxyResponseEvent handleRegister(APIGatewayProxyRequestEvent request)
             throws Exception {
-        AuthRequest authRequest = objectMapper.readValue(request.getBody(), AuthRequest.class);
-        AuthResponse response = authService.registerUser(authRequest);
+        try {
+            AuthRequest authRequest = objectMapper.readValue(request.getBody(), AuthRequest.class);
+            AuthResponse response = authService.registerUser(authRequest);
 
-        return new APIGatewayProxyResponseEvent()
-                .withStatusCode(201)
-                .withBody(objectMapper.writeValueAsString(response));
+            return new APIGatewayProxyResponseEvent()
+                    .withStatusCode(201)
+                    .withBody(objectMapper.writeValueAsString(response));
+        } catch (Exception e) {
+            return new APIGatewayProxyResponseEvent()
+                    .withStatusCode(400)
+                    .withBody(objectMapper.writeValueAsString("Registration failed: " + e.getMessage()));
+        }
     }
 
+    @PostMapping(value = "/auth/login", consumes =MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
     private APIGatewayProxyResponseEvent handleLogin(APIGatewayProxyRequestEvent request)
             throws Exception {
-        AuthRequest authRequest = objectMapper.readValue(request.getBody(), AuthRequest.class);
-        AuthResponse response = authService.loginUser(authRequest);
+        try {
+            AuthRequest authRequest = objectMapper.readValue(request.getBody(), AuthRequest.class);
+            AuthResponse response = authService.loginUser(authRequest);
 
-        return new APIGatewayProxyResponseEvent()
-                .withStatusCode(200)
-                .withBody(objectMapper.writeValueAsString(response));
+            return new APIGatewayProxyResponseEvent()
+                    .withStatusCode(200)
+                    .withBody(objectMapper.writeValueAsString(response));
+        } catch (Exception e) {
+            return new APIGatewayProxyResponseEvent()
+                    .withStatusCode(400)
+                    .withBody(objectMapper.writeValueAsString("Login failed: " + e.getMessage()));
+        }
     }
 }

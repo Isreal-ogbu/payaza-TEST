@@ -21,3 +21,6 @@ aws:
 jwt:
   secret: ${JWT_SECRET:67e3c12f-87c0-800a-b15d-f52cceffe104}
   expirationMs: ${JWT_EXPIRATION_MS:3600000}
+
+server:
+  port: 3001
