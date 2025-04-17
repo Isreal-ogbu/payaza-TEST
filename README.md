@@ -8,8 +8,7 @@ A serverless real-time messaging application using AWS API Gateway WebSockets, L
 - AWS CLI configured (`aws configure`)
 - AWS SAM CLI installed (`brew install aws-sam-cli`)
 - Java 11+ JDK
-- Gradle 7+
-- Node.js (for client-side testing)
+- Maven
 
 ## Deployment
 
